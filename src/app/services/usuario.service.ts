@@ -8,7 +8,7 @@ import { Usuario } from '../class/Usuario';
 })
 export class UsuarioService {
 
-  private API='http://localhost:5109/api/Usuario';
+  private API='https://sistemaupds.bsite.net/api/Usuario';
   constructor(private http:HttpClient) { }
   usuario: Usuario=new Usuario();
 
