@@ -1,0 +1,185 @@
+<!-- Abrir Modal -->
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">INFORME TECNICO</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+  <div class="modal-body">
+    <div class="content-viewport">
+        <div class="row">
+          <div class="col-lg-12">
+                <div class="item-wrapper py-2">
+                  <form [formGroup] = "form" (ngSubmit)="Guardar()">
+                    <div class="form-group">
+                      <label for="numero">Número</label>
+                      <input type="number" class="form-control" id="numero" placeholder="Ingresa tu numero" formControlName="numero"/>
+                       <!-- Abrir Mensaje Error -->                    
+                       <div *ngFor="let error of lista.mensajes.numeroInf">
+                        <div *ngIf="form.controls['numero'].hasError(error.type) && (form.controls['numero'].dirty || form.controls['numero'].touched)">
+                              <small class="error">{{error.message}}</small>
+                        </div>                     
+                      </div>
+                       <!-- Cerrar Mensaje Error -->
+                    </div>
+                    <div class="form-group">
+                        <label for="centrodepublicacion">Centro de Publicacion</label>
+                        <input type="text" class="form-control" id="centrodepublicacion" placeholder="Ingresa tu centro de publicacion" formControlName="centrodepublicacion"/>
+                         <!-- Abrir Mensaje Error -->                    
+                        <div *ngFor="let error of lista.mensajes.centroPub">
+                          <div *ngIf="form.controls['centrodepublicacion'].hasError(error.type) && (form.controls['centrodepublicacion'].dirty || form.controls['centrodepublicacion'].touched)">
+                                <small class="error">{{error.message}}</small>
+                          </div>                     
+                        </div>
+                        <!-- Cerrar Mensaje Error -->
+                      </div>
+                      <div class="form-group">
+                        <label for="fechaPublicacion">Fecha de Publicacion</label>
+                        <input type="date" class="form-control" id="fechaPublicacion" formControlName="fechaPublicacion" name="bday" min= "{{today | date:'yyyy-MM-dd'}}" onkeydown="return false"/>
+                       <!-- Abrir Mensaje Error -->                    
+                       <div *ngFor="let error of lista.mensajes.fechaPub">
+                        <div *ngIf="form.controls['fechaPublicacion'].hasError(error.type) && (form.controls['fechaPublicacion'].dirty || form.controls['fechaPublicacion'].touched)">
+                              <small class="error">{{error.message}}</small>
+                        </div>                     
+                        </div>
+                        <!-- Cerrar Mensaje Error -->
+                      </div>
+                      <div class="form-group">
+                        <label>Articulo</label>
+                        <select class="form-control" formControlName="articuloId">
+                          <ng-container>
+                            <option select value="">Seleccione un Articulo</option>
+                            <option *ngFor="let articulo of listaArticulo" value="{{ articulo.id }}">{{articulo.titulo}}</option>
+                          </ng-container>
+                        </select>
+                       <!-- Abrir Mensaje Error -->                    
+                       <div *ngFor="let error of lista.mensajes.articulo">
+                        <div *ngIf="form.controls['articuloId'].hasError(error.type) && (form.controls['articuloId'].dirty || form.controls['articuloId'].touched)">
+                              <small class="error">{{error.message}}</small>
+                        </div>                     
+                        </div>
+                        <!-- Cerrar Mensaje Error -->
+                      </div>
+                      <div *ngIf="listaArticulo.length == 0">
+                        <p class="text-danger text-center">Para completar el registro debes tener articulos registrados o activos</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click)="modal.dismiss()">Cerrar</button>
+                        <button class="btn btn-success" [disabled]="this.form.invalid"
+                        type="submit"
+                        [class.invalidado]="this.form.invalid"
+                        [class.validado]="this.form.valid" (click)="modal.close()">Guardar</button>
+                      </div>
+                  </form>
+                </div> 
+          </div>
+        </div>
+      </div>
+</div>
+</ng-template>
+<!-- Cerrar Modal -->
+    <div class="content-viewport">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row py-4">
+            <div class="col-sm-9">
+                <div class="">
+                    <h2>INFORME TECNICO</h2>
+                </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="card-description text-right">
+                <div class="row">
+                  <div class="col-sm-6 toppadding"> 
+                    <button type="button" class="btn btn-primary has-icon btn-rounded buttoncolor" aria-haspopup="true" aria-expanded="false" (click)="Guardarinstruct(content)">
+                      <i class="mdi mdi-plus-circle"></i>AGREGAR</button> 
+                  </div>
+                  <div class="col-sm-6 toppadding">  
+                    <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="mdi mdi-content-copy"></i>REPORTE</button>
+                      <div class="dropdown-menu">
+                        <button class="dropdown-item " (click)="reportePDF()">PDF</button>
+                        <button class="dropdown-item " (click)="reporteExcel()">EXCEL</button>                                     
+                      </div>                                  
+                  </div>
+                </div>   
+              </div>
+            </div>
+      </div>
+      <div class="row" >
+        <div class="col-md-4 toppadding">                    
+          <label><span class="subtitulos">BUSCAR</span></label>
+          <div class="input-group">
+            <select id="opInforme" class="form-control col-md-4" [(ngModel)]="criterio">
+               <option value="numero">NUMERO</option>
+              <option value="centrodepublicacion">CENTRO PUBLICACION</option>                                                                            
+            </select>
+            <input type="text" class="form-control" name="filter" placeholder="Buscar..."  [(ngModel)]="search" />              
+             
+          </div>
+        </div><br>
+        <div class="col-md-6">
+          <div class="row"> 
+            <div class="col-md-6 toppadding">
+              <label><span class="subtitulos">FILTRAR ARTICULO</span></label>
+              <select class="form-control form-select" style="width: 100%;" [(ngModel)]="search2"> 
+                <option select value="">Seleccione Articulo</option>                         
+                <option *ngFor="let articulo of listaArticulo" value="{{ articulo.titulo }}">{{articulo.titulo}}</option>           
+              </select> 
+            </div><br>
+            
+          </div>   
+        </div>
+        <div class="col-md-2 text-right toppadding" style="padding-top: 40px;">
+          <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor botonUp"  (click)="LimpiarSearch()" clickable>
+          <i class="mdi mdi-reload"></i>LIMPIAR</button>
+        </div>  
+        </div><br><br> 
+    <div class="item-wrapper">
+          <div class="table-responsive">
+               <table  id ="datos" class="table info-table table-striped">
+                      <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NUMERO</th>
+                                <th>CENTRO DE PUBLICACION</th>
+                                <th>FECHA DE PUBLICACION</th>
+                                <th>ARTICULO</th>
+                                <th>ESTADO</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let informe of listaInforme | filterone:criterio:search |filterone:criterio2:search2 | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+                                  <td scope="row">{{i+((page-1) * pageSize)+1}}</td>
+                                    <td>{{ informe.numero }}</td>
+                                    <td>{{ informe.centrodepublicacion  }}</td>
+                                    <td>{{ informe.fechaPublicacion | date: 'dd/MM/yyyy' }}</td>
+                                    <td>{{ informe.articulo.titulo }}</td>
+
+                                    <td *ngIf="informe.estado == 1"> <label class="badge badge-success btnacti">ACTIVO</label></td>
+                                    <td *ngIf="informe.estado == 0"> <label class="badge badge-danger">INACTIVO</label></td>
+                                    
+                                    <td>
+                                      <button type="button" (click)="SeleccionarInforme(content,informe)" class="btn btn-dark has-icon btn-rounded" style="margin: 10px">
+                                      <i class="mdi mdi-lead-pencil"></i>Modificar</button>
+                                      <button type="button" (click)="CambiarEstado(informe, 0)" class="btn btn-danger has-icon btn-rounded" *ngIf="informe.estado == 1">
+                                        <i class="mdi mdi-delete"></i>Desactivar</button>
+                                      <button type="button" (click)="CambiarEstado(informe, 1)" class="btn btn-success has-icon btn-rounded" *ngIf="informe.estado == 0">
+                                        <i class="mdi mdi-arrow-right-bold-circle"></i>Activar</button>
+                                    </td>
+                                  </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="float-end">
+                      <ngb-pagination [pageSize] = "pageSize" [collectionSize]="pagesizee" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+          function myFunction() {
+            document.getElementById("fechaPublicacion").min;
+          }
+          </script>

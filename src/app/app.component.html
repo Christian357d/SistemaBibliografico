@@ -1,0 +1,19 @@
+<div class="container-fluid g-0">
+    <div *ngIf="loginservice.leerUsuario() == null; else login">
+        <router-outlet></router-outlet>    
+    </div>
+    
+    <ng-template #login>
+            <div *ngIf="loginservice.leerUsuario() == 'Estudiante'; else admin">
+                <app-cliente></app-cliente>
+                
+            </div>
+            
+            <ng-template #admin>
+                <div *ngIf="loginservice.leerUsuario() == 'Administrador'">
+                    <app-admin></app-admin>
+                </div>
+            </ng-template>
+    </ng-template>
+</div>
+

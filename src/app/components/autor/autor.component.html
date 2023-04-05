@@ -1,0 +1,258 @@
+<!-- Abrir Modal -->
+<div class="modal fade" id="autorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">AUTOR</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup] = "form" (ngSubmit)="Guardar()">                   
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre" formControlName="nombre"/>
+            <div *ngFor="let error of lista.mensajes.nombre">
+              <div *ngIf="form.controls['nombre'].hasError(error.type) && (form.controls['nombre'].dirty || form.controls['nombre'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" class="form-control" id="apellido" placeholder="Ingresa tu apellido" formControlName="apellido"/>
+            <div *ngFor="let error of lista.mensajes.apellido">
+              <div *ngIf="form.controls['apellido'].hasError(error.type) && (form.controls['apellido'].dirty || form.controls['apellido'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Genero</label>
+            <select class="form-control form-select" formControlName="genero">
+          <option select value="">Seleccione un Genero</option>
+              <option value="Masculino">
+                Masculino
+              </option>
+              <option value="Femenino">
+                Femenino
+              </option>
+            </select>
+            <div *ngFor="let error of lista.mensajes.genero">
+              <div *ngIf="form.controls['genero'].hasError(error.type) && (form.controls['genero'].dirty || form.controls['genero'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fechanacimiento">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" max="{{hoy | date:'yyyy-MM-dd'}}" (change)="getFecha($event.target)" id="fechanacimiento" formControlName="fechanacimiento"/>
+            <div *ngFor="let error of lista.mensajes.fecha">
+              <div *ngIf="form.controls['fechanacimiento'].hasError(error.type) && (form.controls['fechanacimiento'].dirty || form.controls['fechanacimiento'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div> 
+              <span *ngIf="alertaFecha == 'si'" class="error">El Autor debe ser Mayor de 15 Años</span>                    
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="nacionalidad">Nacionalidad</label>
+            <input type="text" class="form-control" id="nacionalidad" placeholder="Ingresa tu nacionalidad" formControlName="nacionalidad"/>
+            <div *ngFor="let error of lista.mensajes.nacionalidad">
+              <div *ngIf="form.controls['nacionalidad'].hasError(error.type) && (form.controls['nacionalidad'].dirty || form.controls['nacionalidad'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tipoautor">Tipo de Autor</label>
+            <select class="form-control" formControlName="tipoautor" >
+          <option select value="">Seleccione un Tipo de Autor</option>
+              <option value="Cientifico">
+                Cientifico
+              </option>
+              <option value="Investigador">
+                Investigador
+              </option>
+            </select>
+            <div *ngFor="let error of lista.mensajes.tipoAutor">
+              <div *ngIf="form.controls['tipoautor'].hasError(error.type) && (form.controls['tipoautor'].dirty || form.controls['tipoautor'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="email" class="form-control" id="correo" placeholder="Ingresa tu correo" formControlName="correo"/>
+            <div *ngFor="let error of lista.mensajes.correo">
+              <div *ngIf="form.controls['correo'].hasError(error.type) && (form.controls['correo'].dirty || form.controls['correo'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Centro de Trabajo</label>
+            <select class="form-control" formControlName="centroTrabajoId">
+              <ng-container>
+                <option select value="">Seleccione un Centro de Trabajo</option>
+                <option *ngFor="let centrotrabajo of listaCentroTrabajo" value="{{ centrotrabajo.id }}">{{centrotrabajo.nombre}}</option>
+              </ng-container>
+            </select>
+            <div *ngFor="let error of lista.mensajes.centro">
+              <div *ngIf="form.controls['centroTrabajoId'].hasError(error.type) && (form.controls['centroTrabajoId'].dirty || form.controls['centroTrabajoId'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+            <ngb-alert [dismissible]="false" *ngIf="alertaCentros == 'si'">
+              <strong>Advertecia!</strong> Debe Ingresar Nuevos Centros de Trabajo
+            </ngb-alert>
+          </div>
+          <div class="form-group">
+            <label>Temas</label>
+            <select class="form-control" multiple="multiple" formControlName="temaId" ata-menu-style="dropdown-blue" id="temaId">                     
+              <option *ngFor="let tema of listaTemas" value="{{ tema.id }}">{{tema.nombre}}</option>                     
+          </select>                      
+            <div *ngFor="let error of lista.mensajes.temaAutor">
+              <div *ngIf="form.controls['temaId'].hasError(error.type) && (form.controls['temaId'].dirty || form.controls['temaId'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+            <ngb-alert [dismissible]="false" *ngIf="alertaTemas == 'si'">
+              <strong>Advertecia!</strong> Debe Ingresar Nuevos Temas
+            </ngb-alert>
+            <div>
+              <p class="mensaje">{{mensa}}</p>
+            </div>
+          </div>
+          <div *ngIf="this.form.invalid == true">
+            <p class="text-danger">Debe llenar todos los campos corectamente</p>
+          </div>
+            <div class="modal-footer">
+              <button id="ModalClose" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button class="btn btn-success" [disabled]="this.form.invalid"
+              type="submit"
+              [class.invalidado]="this.form.invalid"
+              [class.validado]="this.form.valid" >Guardar</button>
+            </div>
+        
+       </form>                  
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Cerrar Modal -->
+
+<div class="content-viewport">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="row py-4">
+        <div class="col-sm-9">
+            <div class="">
+                <h2>AUTOR</h2>
+            </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card-description text-right">
+            <div class="row">
+              <div class="col-sm-6"> 
+                <button type="button" class="btn btn-primary has-icon btn-rounded buttoncolor" (click)="Guardarinstruct()"
+                      data-toggle="modal" data-target="#autorModal" >
+                  <i class="mdi mdi-plus-circle"></i>AGREGAR</button> 
+              </div>
+              <div class="col-sm-6">  
+                <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="mdi mdi-content-copy"></i>REPORTE</button>
+                  <div class="dropdown-menu">
+                    <button class="dropdown-item " (click)="reportePDF()">PDF</button>
+                    <button class="dropdown-item " (click)="reporteExcel()">EXCEL</button>                                     
+                  </div>                                  
+              </div>
+            </div>   
+          </div>
+        </div>
+  </div>
+  <div >
+    <div class="form-group row">
+        <div class="col-md-7">
+            <div class="input-group">
+                <select class="form-control col-md-3 text-center" [(ngModel)]="criterio">
+                  <option value="nombre">Nombre</option>
+                  <option value="apellido">Apellido</option>
+                  <option value="correo">Correo</option>
+                </select>
+                <input type="text" class="form-control" name="filter" placeholder="Busqueda..." [(ngModel)]="search" />
+            </div>
+            
+        </div>
+        <div class="col-md-5 text-right">
+          <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor"  (click)="LimpiarSearch()" clickable>
+            <i class="mdi mdi-reload"></i>LIMPIAR</button>
+        </div>
+    </div>
+</div>
+              <div class="col-lg-12">
+                <div class="item-wrapper">
+                  <div class="table-responsive">
+                       <table class="table info-table table-striped">
+                        <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>NOMBRE</th>
+                                  <th>APELLIDO</th>
+                                  <th>GENERO</th>
+                                  <th>FECHA_NACIMIENTO</th>
+                                  <th>NACIONALIDAD</th>
+                                  <th>TIPO</th>
+                                  <th>CORREO</th>
+                                  <th>CENTRO_TRABAJO</th>
+                                  <th>TEMAS</th>
+                                  <th>ESTADO</th>
+                                  <th></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let autor of listaAutor | filterone:criterio:search | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+                                <ng-container>
+                                  <td scope="row">{{i+((page-1) * pageSize)+1}}</td>
+                                  <td>{{ autor.persona.nombre }}</td>
+                                  <td>{{ autor.persona.apellido }}</td>
+                                  <td>{{ autor.persona.genero }}</td>
+                                  <td>{{ autor.persona.fechaNacimiento | date: 'dd/MM/yyyy'}}</td>
+                                  <td>{{ autor.persona.nacionalidad }}</td>
+                                  <td>{{ autor.tipoAutor }}</td>
+                                  <td>{{ autor.correo }}</td>
+                                  <td>{{ autor.centroTrabajo.nombre}}</td>
+                                  <td>
+                                    <ng-container *ngFor="let temaautor of listaTemaAutor; let x=index">
+                                      <ng-container *ngIf="autor.id == temaautor.autorId">
+                                        <ng-container *ngFor="let tema of listaTemas">
+                                          <ng-container *ngIf="temaautor.temaId == tema.id">
+                                            {{tema.nombre}}<br>
+                                          </ng-container>
+                                        </ng-container>
+                                      </ng-container>
+                                    </ng-container>
+                                  </td>
+                                  <td *ngIf="autor.estado == 1"> <label class="badge badge-success btnacti">ACTIVO</label></td>
+                                  <td *ngIf="autor.estado == 0"> <label class="badge badge-danger">INACTIVO</label></td>
+                                    
+                                  <td>
+                                    <button type="button" (click)="SeleccionarAutor(autor)" class="btn btn-dark has-icon btn-rounded" style="margin: 10px"
+                                    data-toggle="modal" data-target="#autorModal">
+                                    <i class="mdi mdi-lead-pencil"></i>Modificar</button>
+                                    <button type="button" (click)="CambiarEstado(autor, 0)" class="btn btn-danger has-icon btn-rounded" *ngIf="autor.estado == 1">
+                                      <i class="mdi mdi-delete"></i>Eliminar</button>
+                                    <button type="button" (click)="CambiarEstado(autor, 1)" class="btn btn-success has-icon btn-rounded" *ngIf="autor.estado == 0">
+                                      <i class="mdi mdi-arrow-right-bold-circle"></i>Activar</button>
+                                  </td>
+                                </ng-container>
+                                </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="float-end">
+                    <ngb-pagination [pageSize] = "pageSize" [collectionSize]="pagesizee" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+                  </div>
+              </div>
+          </div>
+

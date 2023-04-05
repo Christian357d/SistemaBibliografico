@@ -1,0 +1,25 @@
+/* .col-6{
+    outline: none;
+    width: 100%;
+    background-color: transparent;
+    color: #121212;
+    border: none;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 8px;
+    padding-left: .5rem;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+.icon{
+    width: 5%;
+    height: 3%;
+    top: 10%;
+    right: 8px;
+    transform: translate(-50%);
+    opacity: 0.5;
+    cursor: pointer;
+} */

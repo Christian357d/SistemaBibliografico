@@ -1,0 +1,218 @@
+<nav class="t-header">
+  <div class="t-header-brand-wrapper">
+    <a [routerLink]="['/homeadmin']">
+      <img id="logoImg" class="logo" src="../assets/Admin/images/UPDS.png" alt="">
+      <img id= "logoupdsmin"class="logo-mini" src="../assets/Admin/images/logou.png" alt="">
+    </a>  
+  </div>
+  <div class="t-header-content-wrapper">
+    <div class="t-header-content">
+      <button class="t-header-toggler t-header-mobile-toggler d-block d-lg-none" onclick="Nav()">
+        <i class="mdi mdi-menu icon-white"></i>
+      </button>
+      <ul class="nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" (click)="update()" id="notificationDropdown" data-toggle="dropdown" aria-expanded="false">
+            <i class="mdi mdi-bell-outline mdi-2x"></i>
+            <span *ngIf="listaComunicado.length > 0" class="notification-indicator notification-indicator-primary notification-indicator-ripple"></span>
+          </a>
+          <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="notificationDropdown">
+            <div class="dropdown-header">
+              <h4 class="dropdown-title">Notificaciones</h4>
+              <p *ngIf="listaComunicado.length > 0" class="dropdown-title-text">Tienes nuevos Comunicados</p>
+              <p *ngIf="listaComunicado.length <= 0" class="dropdown-title-text">No Tienes Comunicados</p>
+            </div>
+            <div *ngIf="listaComunicado.length > 0" class="dropdown-body">
+              <div class="dropdown-list" *ngFor="let comunicado of listaComunicado | slice: (reversedList.length > 3 ? reversedList.length - 3 : 0) ; let i = index">
+                <div class="icon-wrapper rounded-circle" >
+                  <i class="mdi mdi-file-multiple"></i>
+                </div>
+                <div class="content-wrapper">
+                  <small class="name">{{comunicado.titulo}}</small><br>
+                  <small class="content-text">{{comunicado.fechaPublicacion  | date: 'dd/MM/yyyy'}}</small>
+                </div>
+              </div>
+          </div>
+            <div *ngIf="listaComunicado.length > 0" class="dropdown-footer">
+              <a [routerLink]="['/comunicado']">Ver Todos</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="messageDropdown" data-toggle="dropdown" aria-expanded="false">
+            <i class="mdi mdi-message-outline mdi-2x"></i>
+            <span class="notification-indicator notification-indicator-primary notification-indicator-ripple"></span>
+          </a>
+          <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="messageDropdown">
+            <div class="dropdown-header">
+              <h4 class="dropdown-title">Mensajes</h4>
+              <p class="dropdown-title-text">Tienes 2 Mensajes</p>
+            </div>
+            <div class="dropdown-body">
+              <div class="dropdown-list">
+                <div class="image-wrapper">
+                  <img class="profile-img" src="../assets/Admin/images/profile/male/image_1.png" alt="profile image">
+                  <div class="status-indicator rounded-indicator bg-success"></div>
+                </div>
+                <div class="content-wrapper">
+                  <small class="name">Pedro Flores</small>
+                  <small class="content-text">Tenemos una reunion pendiente.</small>
+                </div>
+              </div>
+              <div class="dropdown-list">
+                <div class="image-wrapper">
+                  <img class="profile-img" src="../assets/Admin/images/profile/female/image_2.png" alt="profile image">
+                  <div class="status-indicator rounded-indicator bg-success"></div>
+                </div>
+                <div class="content-wrapper">
+                  <small class="name">Rachel Gonzales</small>
+                  <small class="content-text">Sube los nuevos registros.</small>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-footer">
+              <a href="#">Ver Todos</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="appsDropdown" data-toggle="dropdown" aria-expanded="false">
+            <i class="mdi mdi-login-variant mdi-2x"></i>
+          </a>
+          <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="appsDropdown">
+            <div class="dropdown-header">
+              <h4 class="dropdown-title">LOGOUT</h4>
+            </div>
+            <div class="dropdown-body">
+              <div class="dropdown-list">
+                <div class="image-wrapper">
+                  <img class="profile-img" src="../assets/Admin/images/userdefault.png" alt="profile image">
+                  <div class="status-indicator rounded-indicator bg-success"></div>
+                </div>
+                <div class="content-wrapper">
+                  <small class="name paddinglef">{{nombreusuario}}</small><br>
+                  <small class="content-text paddinglef">Administrador</small>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-footer text-right" style="padding-right: 20px;">
+              <button type="button" class="btn btn-danger has-icon btn-rounded"
+              data-target="#exampleModal" (click)="cerrarsesion()">   SALIR  </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- partial -->
+<div class="page-body">
+  <!-- partial:partials/_sidebar.html -->
+  <div class="sidebar">
+    <div class="user-profile">
+      <div class="display-avatar">
+        <img class="profile-img img-lg rounded-circle" src="../assets/Admin/images/logoupdsblanco.png" alt="profile image">
+      </div>
+      <div class="info-wrapper">
+        <p class="user-name">UNIVERSIDAD PRIVADA DOMINGO SAVIO</p>
+        <h6 class="display-income">Sistema Bibliografico</h6>
+      </div>
+    </div>
+    <ul class="navigation-menu">
+      <li>
+        <a [routerLink]="['/homeadmin']">
+          <span class="link-title">Dashboard</span>
+          <i class="mdi mdi-gauge link-icon"></i>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/articulo']">
+          <span class="link-title">Articulos</span>
+          <i class="mdi mdi-book link-icon"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#sample-pages" data-toggle="collapse" aria-expanded="false">
+          <span class="link-title">Tipo Publicacion</span>
+          <i class="mdi mdi-book-open link-icon"></i>
+        </a>
+        <ul class="collapse navigation-submenu" id="sample-pages">
+          <li>
+            <a  [routerLink]="['/informe']">Infome Tecnico</a>
+          </li>
+
+          <li>
+            <a [routerLink]="['/actacongreso']">Acta Congreso</a>
+          </li>
+
+          <li>
+              <a [routerLink]="['/revistacientifica']">Revista Científica</a>
+          </li>
+          <li>
+            <a [routerLink]="['/comunicado']">Comunicados</a>
+        </li>
+        </ul>
+      </li>
+      <li>
+          <a href="#Autor" data-toggle="collapse" aria-expanded="false">
+            <span class="link-title">Autores y Editores</span>
+            <i class="mdi mdi-book-open-page-variant link-icon"></i>
+          </a>
+          <ul class="collapse navigation-submenu" id="Autor">
+            <li>
+              <a [routerLink]="['/autor']">Autor</a>
+            </li>
+            <li>
+              <a [routerLink]="['/editor']">Editor</a>
+            </li>
+          </ul>
+      </li>
+      <li>
+          <a href="#ui-elements" data-toggle="collapse" aria-expanded="false">
+            <span class="link-title">Seguridad</span>
+            <i class="mdi mdi-account link-icon"></i>
+          </a>
+          <ul class="collapse navigation-submenu" id="ui-elements">
+            <li>
+              <a [routerLink]="['/usestudent']">Estudiante</a>
+            </li>
+            <li>
+              <a [routerLink]="['/usadmin']">Administrador</a>
+            </li>
+            <li>
+              <a [routerLink]="['/rol']">Rol</a>
+            </li>
+          </ul>
+      </li>
+      <li>
+        
+    </li>
+      <li>
+          <a [routerLink]="['/tema']">
+            <span class="link-title">Temas</span>
+            <i class="mdi mdi-lead-pencil link-icon"></i>
+          </a>
+      </li>
+      <li>
+          <a [routerLink]="['/centrotrabajo']">
+            <span class="link-title">Centros de Trabjo</span>
+            <i class="mdi mdi-home link-icon"></i>
+          </a>
+      </li>
+      <li>
+        <a [routerLink]="['/tipocongreso']">
+            <span class="link-title">Tipos de Congreso</span>
+            <i class="mdi mdi-clipboard-outline link-icon"></i>
+          </a>
+      </li>
+    </ul>
+  </div>
+
+</div>
+<div class="tcolor">
+  <div class="page-content-wrapper ">
+    <div class="page-content-wrapper-inner">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

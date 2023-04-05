@@ -1,0 +1,43 @@
+
+<body>
+    <div class="authentication-theme auth-style_1" id="sectionfondo">
+      <div class="row">
+        <div class="col-lg-5 col-md-7 col-sm-9 col-11 mx-auto">
+          <div class="grid borderlogin">
+            <div class="container">
+              <div class="row" style="background-color: #f6f6f6;">
+                <div class="col-12 logo-section logosection">
+                  <a href="../../index.html" class="logo">
+                    <img src="../assets/Admin/images/logoUPDS.png" style="width: 120%;" alt="logo" />
+                  </a>
+                </div>
+              </div>
+              <div class="row logosection" style="background-color: white;">
+                <div class="col-lg-7 col-md-8 col-sm-9 col-12 mx-auto form-wrapper">
+                  <form action="#">
+                    <div class="form-group input-rounded">
+                      <input type="text" class="form-control" placeholder="Correo electrónico" [(ngModel)]="nombre" [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                    <div class="form-group input-rounded">
+                      <input type="password" class="form-control" placeholder="Contraseña" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
+                      <br>
+                      <div *ngIf="valuerror == 1">
+                        <h5 class="error text-center">LLene todos los datos</h5>
+                      </div>
+                    </div>
+                    
+                    <button type="submit" (click)="getLogs()" class="btn btn-danger btn-block  buttoncolor"> Iniciar Sesion </button>
+                  </form><br>
+                  <br><br>
+                  <div class="signup-link">
+                    <p>No recuerdas tu contraseña?</p>
+                    <a href="https://www.upds.edu.bo/contacto/sede-tarija/">Contactanos</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>

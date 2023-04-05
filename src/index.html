@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sistema Bibliografico - UPDS</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../assets/Admin/images/logou.png">
+  <link rel="stylesheet" href="../assets/Admin/vendors/iconfonts/mdi/css/materialdesignicons.css">
+  <link rel="stylesheet" href="../assets/Admin/css/shared/style.css">
+  <link rel="stylesheet" href="../assets/Admin/css/demo_1/style.css">
+
+  <link rel="shortcut icon" href="../asssets/Admin/images/favicon.ico"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <!-- Select2 -->
+<link rel="stylesheet" href="../assets/Admin/css/select2.min.css">
+<link rel="stylesheet" href="../assets/Admin/css/select2-bootstrap4.min.css">
+</head>
+<body class="mat-typography">
+  <app-root></app-root>
+</body>
+    <script src="../assets/Admin/vendors/js/core.js"></script>
+    <script src="../assets/Admin/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/Admin/vendors/chartjs/Chart.min.js"></script>
+    <script src="../assets/Admin/js/charts/chartjs.addon.js"></script>
+    <script src="../assets/Admin/js/template.js"></script>
+    <script src="../assets/Admin/js/dashboard.js"></script>
+    <!-- Select2 -->
+    <script src="../assets/Admin/js/select2.full.min.js"></script>
+    <script> $(document).ready(function(){setInterval(function() {
+      //Initialize Select2 Elements
+     $('#autorId').select2({         
+          dropdownParent: $('#articuloModal'),  
+        }) 
+    $('#temaId').select2({         
+      dropdownParent: $('#autorModal'),  
+    }) 
+    $('#temaIdR').select2({         
+      dropdownParent: $('#revistaModal'),  
+    })               
+    }, 4000)})</script>
+      <script>
+         $(document).ready(function(){   
+          $('#pais').select2({
+            theme: 'bootstrap4',
+            dropdownParent: $('#actaModal'),    
+          })   
+      ; 
+        })
+
+      </script>
+      <script>
+        function Nav() {
+          $(".page-body").toggleClass("sidebar-collpased");
+        }
+      </script>
+</html>

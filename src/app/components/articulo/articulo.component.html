@@ -1,0 +1,285 @@
+<!-- Abrir Modal -->
+<div class="modal fade" id="articuloModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="titulos modal-title" id="exampleModalLabel">ARTICULO</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup] = "form" (ngSubmit)="Guardar()">
+            <div class="form-group">
+              <label for="titulo">Titulo</label>
+              <input type="text" class="form-control" id="titulo" placeholder="Ingresa tu titulo" formControlName="titulo"
+              [class.incorrect]="
+                this.form.get('titulo')?.invalid &&
+                this.form.get('titulo')?.touched
+              "[class.correct]="this.form.get('titulo')?.valid"/>
+              <!-- Abrir Mensaje Error -->                    
+              <div *ngFor="let error of lista.mensajes.titulo">
+                <div *ngIf="form.controls['titulo'].hasError(error.type) && (form.controls['titulo'].dirty || form.controls['titulo'].touched)">
+                      <small class="error">{{error.message}}</small>
+                </div>                     
+              </div>
+            <!-- Cerrar Mensaje Error -->
+            </div>
+
+            <div class="form-group">
+              <label for="palabrasclave">Palabras Clave</label>
+              <input type="text" class="form-control" id="palabrasclave" placeholder="Ingresa las Palabras Clave" formControlName="palabrasclave"
+                [class.incorrect]="
+                  this.form.get('palabrasclave')?.invalid &&
+                  this.form.get('palabrasclave')?.touched
+                "[class.correct]="this.form.get('palabrasclave')?.valid"/>
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.palabrasclave">
+                <div *ngIf="form.controls['palabrasclave'].hasError(error.type) && (form.controls['palabrasclave'].dirty || form.controls['palabrasclave'].touched)">
+                      <small class="error">{{error.message}}</small>
+                </div>                     
+              </div>
+            <!-- Cerrar Mensaje Error -->                
+              </div>
+
+              
+              <div class="form-group">
+                <label for="correo">Correo de Contacto</label>
+                <input type="text" class="form-control" id="correo" placeholder="Ingresa tu correo" formControlName="correo"
+                  [class.incorrect]="
+                    this.form.get('correo')?.invalid &&
+                    this.form.get('correo')?.touched
+                  "[class.correct]="this.form.get('correo')?.valid"/>
+                  <!-- Abrir Mensaje Error -->                    
+              <div *ngFor="let error of lista.mensajes.correoContacto">
+                <div *ngIf="form.controls['correo'].hasError(error.type) && (form.controls['correo'].dirty || form.controls['correo'].touched)">
+                      <small class="error">{{error.message}}</small>
+                </div>                     
+              </div>
+            <!-- Cerrar Mensaje Error -->              
+                </div>
+
+            
+                <div class="form-group">
+                  <label>Copia</label>
+                  <select class="form-control form-select" formControlName="copia" [(ngModel)]="copias">
+                <option select value="">Seleccione si se tendra una copia</option>
+                    <option value="Si">
+                      Si
+                    </option>
+                    <option value="No">
+                      No
+                    </option>
+                  </select>
+                  <div *ngFor="let error of lista.mensajes.copia">
+                    <div *ngIf="form.controls['copia'].hasError(error.type) && (form.controls['copia'].dirty || form.controls['copia'].touched)">
+                          <small class="error">{{error.message}}</small>
+                    </div>                     
+                  </div>
+                </div>
+
+            <div class="form-group"  *ngIf="copias == 'Si'">
+              <label>Ubicacion de la Copia</label>
+              <select class="form-control form-select" formControlName="ubicacioncopia">
+            <option select value="">Seleccione un Ubicacion de la copia</option>
+                <option value="Laboratorio">
+                  Laboratorio
+                </option>
+                <option value="Despacho">
+                  Despacho
+                </option>
+              </select>
+              <div *ngFor="let error of lista.mensajes.ubicacion">
+                <div *ngIf="form.controls['ubicacioncopia'].hasError(error.type) && (form.controls['ubicacioncopia'].dirty || form.controls['ubicacioncopia'].touched)">
+                      <small class="error">{{error.message}}</small>
+                </div>                     
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Autores</label>
+              <select class="form-control" multiple="multiple" formControlName="autorId" ata-menu-style="dropdown-blue" id="autorId">                   
+                  <option *ngFor="let autor of listaAutor" value="{{ autor.id }}">{{autor.persona.nombre}} {{autor.persona.apellido}}</option>                       
+              </select>
+              <!-- Abrir Mensaje Error -->                    
+              <div *ngFor="let error of lista.mensajes.autor">
+              <div *ngIf="form.controls['autorId'].hasError(error.type) && (form.controls['autorId'].dirty || form.controls['autorId'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+          <!-- Cerrar Mensaje Error -->
+            </div>
+
+            <div class="modal-footer">
+              <button id="ModalClose" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button class="btn btn-success" [disabled]="this.form.invalid"
+              type="submit"
+              [class.invalidado]="this.form.invalid"
+              [class.validado]="this.form.valid" >Guardar</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Cerrar Modal -->
+      
+
+      <div class="content-viewport">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row py-4">
+              <div class="col-sm-9">
+                  <div class="">
+                      <h2>ARTICULOS</h2>
+                  </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="card-description text-right">
+                  <div class="row">
+                    <div class="col-sm-6 n-3"> 
+                      <button type="button" class="btn btn-primary has-icon btn-rounded buttoncolor" style="width: 9rem;" (click)="Guardarinstruct()"
+                      data-toggle="modal" data-target="#articuloModal">
+                        <i class="mdi mdi-plus-circle"></i>AGREGAR</button> 
+                    </div>
+                    <div class="col-sm-6">  
+                      <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-content-copy"></i>REPORTE</button>
+                        <div class="dropdown-menu">
+                          <button class="dropdown-item " (click)="reportePDF()">PDF</button>
+                          <button class="dropdown-item " (click)="reporteExcel()">EXCEL</button>                                     
+                        </div>                                  
+                    </div>
+                  </div>   
+                </div>
+              </div>
+                </div>
+                <div class="row" >
+                  <div class="col-md-5 ">                    
+                    <label><span class="subtitulos">BUSCAR</span></label>
+                  </div>
+                  <div class="col-md-7 ">
+                    <div class="row"> 
+                      <div class="col-md-3 ">
+                        <label><span class="subtitulos">FILTRAR COPIA</span></label>
+                      </div>
+                      <div class="col-md-5 ">
+                        <label><span class="subtitulos">FILTRAR UBICACION</span></label>
+                      </div>
+                    </div>
+                    
+                  </div>
+                          
+                  </div>   
+                <div class="form-group row">
+                  <div class="col-md-5 ">
+                      <div class="input-group">
+                        <select id="opArt" class="form-control col-md-3" [(ngModel)]="criterio3">
+                          <option value="titulo">TITULO</option>
+                          <option value="palabrasClave">PALABRA CLAVE</option>                         
+                          <option value="autor">AUTOR</option>
+                        </select>
+                        <input type="text" class="form-control" name="filter" placeholder="Buscar..."  [(ngModel)]="search3" />              
+                         
+                      </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="row">
+                      <div class="col-md-3">
+                      
+                        <div class="form-inline">
+                          <div class="radio">
+                            <label class="radio-label mr-4">
+                              <input name="copia" type="radio" value="SI" [(ngModel)]="search">SI <i class="input-frame" ></i>
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label class="radio-label">
+                              <input name="copia" type="radio" value="NO"  [(ngModel)]="search">NO <i class="input-frame"></i>
+                            </label>
+                          </div>
+                        </div>
+                    
+                      </div>
+                      <div class="col-md-5">
+                        <div class="form-inline">
+                          <div class="radio">
+                            <label class="radio-label mr-4">
+                              <input name="ubicacion"  type="radio" value="LABORATORIO" [(ngModel)]="search2">LABORATORIO <i class="input-frame"></i>
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label class="radio-label">
+                              <input name="ubicacion" type="radio" value="DESPACHO" [(ngModel)]="search2">DESPACHO<i class="input-frame"></i>
+                            </label>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="col-md-4 text-right">
+                <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor botonUp"  (click)="LimpiarSearch()" clickable>
+                <i class="mdi mdi-reload"></i>LIMPIAR</button>
+                      </div>
+                    </div>                                                    
+                  </div>
+              </div>
+                    <div class="col-lg-12">
+                      <div class="item-wrapper">
+                        <div class="table-responsive">
+                             <table id="datos" class="table info-table table-striped">
+                              <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>TITULO</th>
+                                    <th>PALABRAS CLAVE</th>
+                                    <th>CORREO CONTACTO</th>
+                                    <th>COPIA</th>
+                                    <th>UBICACION</th>
+                                    <th>AUTORES</th>
+                                    <th>ESTADO</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let articulo of listaArticulo | filterone:criterio:search | filterone:criterio2:search2 | filterthree:criterio3:search3:listaAutor | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+                                <td scope="row">{{i+((page-1) * pageSize)+1}}</td>
+                                    <td>{{ articulo.titulo }}</td>
+                                    <td>{{ articulo.palabrasClave }} </td>
+                                    <td>{{ articulo.correo }}</td>
+                                    <td>{{ articulo.copia}}</td>
+                                    <td><ng-container *ngIf="!articulo.ubicacionCopia">Sin Ubicacion</ng-container>
+                                      <ng-container *ngIf="articulo.ubicacioncopia != ''">{{articulo.ubicacionCopia}}</ng-container></td>
+                                    <td>
+                                      <ng-container *ngFor="let articuloautor of listaArticuloAutor; let x=index">
+                                        <ng-container *ngIf="articulo.id == articuloautor.articuloId">
+                                          <ng-container *ngFor="let autor of listaAutor">
+                                            <ng-container *ngIf="articuloautor.autorId == autor.id">
+                                              {{autor.persona.nombre}} {{autor.persona.apellido}}<br>
+                                            </ng-container>
+                                          </ng-container>
+                                        </ng-container>
+                                      </ng-container>
+                                    </td>
+                                    <td *ngIf="articulo.estado == 1"> <label class="badge badge-success btnacti">ACTIVO</label></td>
+                                    <td *ngIf="articulo.estado == 0"> <label class="badge badge-danger">INACTIVO</label></td>
+                                    <td>
+                                      <button type="button" (click)="SeleccionarArticulo(articulo)"  class="btn btn-dark has-icon btn-rounded" style="margin: 10px"
+                                      data-toggle="modal" data-target="#articuloModal">
+                                      <i class="mdi mdi-lead-pencil"></i>Modificar</button>
+                                      <button type="button" (click)="CambiarEstado(articulo, 0)" class="btn btn-danger has-icon btn-rounded" *ngIf="articulo.estado == 1">
+                                        <i class="mdi mdi-delete"></i>Eliminar</button>
+                                      <button type="button" (click)="CambiarEstado(articulo, 1)" class="btn btn-success has-icon btn-rounded" *ngIf="articulo.estado == 0">
+                                        <i class="mdi mdi-arrow-right-bold-circle"></i>Activar</button>
+                                    </td>
+                                  </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="float-end">
+                      <ngb-pagination [pageSize] = "pageSize" [collectionSize]="pagesizee" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+

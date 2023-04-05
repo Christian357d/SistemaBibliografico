@@ -1,0 +1,244 @@
+<!-- Abrir Modal -->
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">COMUNICADO</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+	</div>
+  <div class="modal-body">
+    <div class="content-viewport">
+        <div class="row">
+          <div class="col-lg-12">
+                <div class="item-wrapper py-2">
+                  <form [formGroup] = "form" (ngSubmit)="Guardar()">
+                    <div class="form-group">
+                      <label for="titulo">Titulo</label>
+                      <input type="text" class="form-control" id="titulo" placeholder="Ingresa tu titulo" formControlName="titulo"/>
+                      <!-- Abrir Mensaje Error -->                    
+                      <div *ngFor="let error of lista.mensajes.titulo">
+                        <div *ngIf="form.controls['titulo'].hasError(error.type) && (form.controls['titulo'].dirty || form.controls['titulo'].touched)">
+                              <small class="error">{{error.message}}</small>
+                        </div>                     
+                     </div>
+                    <!-- Cerrar Mensaje Error -->
+                    </div>
+                    <div class="form-group">
+                      <label for="descripcion">Descripcion</label>
+                      <input type="text" class="form-control" id="descripcion" placeholder="Ingresa la Descripcion" formControlName="descripcion"/>
+                      <!-- Abrir Mensaje Error -->                    
+                      <div *ngFor="let error of lista.mensajes.descripcion">
+                        <div *ngIf="form.controls['descripcion'].hasError(error.type) && (form.controls['descripcion'].dirty || form.controls['descripcion'].touched)">
+                              <small class="error">{{error.message}}</small>
+                        </div>                     
+                     </div>
+                    <!-- Cerrar Mensaje Error -->
+                    </div>
+                    <div class="form-group">
+                      <label for="copia">Area</label>
+                      <select class="form-control form-select" formControlName="remitente" [class.incorrect]="
+                      this.form.get('remitente')?.invalid &&
+                      this.form.get('remitente')?.touched
+                    "[class.correct]="this.form.get('remitente')?.valid">
+                    <option select value="">Seleccione un Area</option>
+                        <option value="Jefatura de Carrera">Jefatura de Carrera</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Talento Humano">Talento Humano</option>
+                        <option value="Soporte Técnico">Soporte Técnico</option>
+                          <option value="Comunicación Estrategica">Comunicación Estrategica</option>
+                          <option value="Seguimiento al Graduado">Seguimiento al Graduado</option>
+                          <option value="Rectorado">Rectorado</option>
+                          <option value="Vicerectorado">Vicerectorado</option>
+                          <option value="Biblioteca">Biblioteca</option>
+                          <option value="Modalidad de Grado">Modalidad de Grado</option>
+                          <option value="Caja">Caja</option>
+                          <option value="Registro">Registro</option>
+                          <option value="Bienestar Estudiantil">Bienestar Estudiantil</option>
+                          <option value="Producción y Publicidad">Producción y Publicidad</option>
+                          <option value="Coordinación Academica">Coordinación Academica</option>
+                          <option value="Contabilidad y Finanzas">Contabilidad y Finanzas</option>
+                          <option value="Activos Fijos">Activos Fijos</option>
+                          <option value="Acreditación">Acreditación</option>
+                          <option value="Sistemas">Sistemas</option>
+                      </select>
+                      <!-- Abrir Mensaje Error -->                    
+                      <div *ngFor="let error of lista.mensajes.remitente">
+                        <div *ngIf="form.controls['remitente'].hasError(error.type) && (form.controls['remitente'].dirty || form.controls['remitente'].touched)">
+                              <small class="error">{{error.message}}</small>
+                        </div>                     
+                     </div>
+                    <!-- Cerrar Mensaje Error -->
+                    </div>
+                    
+                      <div class="form-group">
+                        <label for="fechapublicacion">Fecha de Publicacion</label>
+                        <input type="date" class="form-control" id="fechapublicacion" formControlName="fechapublicacion"/>
+                        <!-- Abrir Mensaje Error -->                    
+                      <div *ngFor="let error of lista.mensajes.fechaCom">
+                        <div *ngIf="form.controls['fechapublicacion'].hasError(error.type) && (form.controls['fechapublicacion'].dirty || form.controls['fechapublicacion'].touched)">
+                              <small class="error">{{error.message}}</small>
+                        </div>                     
+                     </div>
+                    <!-- Cerrar Mensaje Error -->
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click)="modal.dismiss()">Cerrar</button>
+                        <button class="btn btn-success" [disabled]="this.form.invalid"
+                        type="submit"
+                        [class.invalidado]="this.form.invalid"
+                        [class.validado]="this.form.valid" (click)="modal.close()">Guardar</button>
+                      </div>
+                  </form>
+                </div> 
+          </div>
+        </div>
+      </div>
+</div>
+</ng-template>
+<!-- Cerrar Modal -->
+
+<div class="content-viewport">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="row py-4">
+        <div class="col-sm-9">
+            <div class="">
+                <h2>COMUNICADOS</h2>
+            </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card-description text-right">
+            <div class="row">
+              <div class="col-sm-6"> 
+                <button type="button" class="btn btn-primary has-icon btn-rounded buttoncolor" (click)="Guardarinstruct(content)">
+                  <i class="mdi mdi-plus-circle"></i>AGREGAR</button> 
+              </div>
+              <div class="col-sm-6">  
+                <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="mdi mdi-content-copy"></i>REPORTE</button>
+                  <div class="dropdown-menu">
+                    <button class="dropdown-item " (click)="reportePDF()">PDF</button>
+                    <button class="dropdown-item " (click)="reporteExcel()">EXCEL</button>                                     
+                  </div>                                  
+              </div>
+            </div>   
+          </div>
+        </div>
+  </div>
+
+
+
+
+  <div class="row" >
+    <div class="col-md-5 ">                    
+      <label><span class="subtitulos">BUSCAR</span></label>
+    </div>
+    <div class="col-md-7 ">
+      <div class="row"> 
+        
+        <div class="col-md-5 ">
+          <label><span class="subtitulos">FILTRAR AREA</span></label>
+        </div>
+      </div>
+      
+    </div>
+            
+    </div>   
+  <div class="form-group row">
+    <div class="col-md-5 ">
+        <div class="input-group">
+          <select class="form-control col-md-3" [(ngModel)]="criterio">
+            <option value="titulocomuni">Título</option>
+            <option value="descomuni">Descripcion</option>
+          </select>
+          <input type="text" class="form-control" name="filter" placeholder="Buscar..."  [(ngModel)]="search" />              
+           
+        </div>
+    </div>
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <select class="form-control form-select" [(ngModel)]="search2">
+                <option value="">Seleccione un Area</option>
+                <option value="Jefatura de Carrera">Jefatura de Carrera</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Talento Humano">Talento Humano</option>
+                <option value="Soporte Técnico">Soporte Técnico</option>
+                <option value="Comunicación Estrategica">Comunicación Estrategica</option>
+                <option value="Seguimiento al Graduado">Seguimiento al Graduado</option>
+                <option value="Rectorado">Rectorado</option>
+                <option value="Vicerectorado">Vicerectorado</option>
+                <option value="Biblioteca">Biblioteca</option>
+                <option value="Modalidad de Grado">Modalidad de Grado</option>
+                <option value="Caja">Caja</option>
+                <option value="Registro">Registro</option>
+                <option value="Bienestar Estudiantil">Bienestar Estudiantil</option>
+                <option value="Producción y Publicidad">Producción y Publicidad</option>
+                <option value="Coordinación Academica">Coordinación Academica</option>
+                <option value="Contabilidad y Finanzas">Contabilidad y Finanzas</option>
+                <option value="Activos Fijos">Activos Fijos</option>
+                <option value="Acreditación">Acreditación</option>
+                <option value="Sistemas">Sistemas</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-7 text-right">
+          <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor botonUp"  (click)="LimpiarSearch()" clickable>
+          <i class="mdi mdi-reload"></i>LIMPIAR</button>
+        </div>
+      </div>                                                    
+    </div>
+</div>
+
+            <div class="item-wrapper">
+                <div class="table-responsive">
+                     <table id ="datos" class="table info-table table-striped">
+                        <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>TITULO</th>
+                                  <th>DESCRIPCION</th>
+                                  <th>REMITENTE</th>
+                                  <th>FECHA DE PUBLICACION</th>
+                                  <th>ULTIMA MODIFICACION</th>
+                                  <th>ESTADO</th>
+                                  <th></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let comunicado of listaComunicado | filterone:criterio:search | filterone:criterio2:search2 | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;  let i = index">
+                                <td scope="row">{{i+((page-1) * pageSize)+1}}</td>
+                                  <td>{{ comunicado.titulo }}</td>
+                                  <td>{{ comunicado.descripcion }}</td>
+                                  <td>{{ comunicado.remitente }}</td>
+                                  <td>{{ comunicado.fechaPublicacion | date: 'dd/MM/yyyy'}}</td>
+                                  <td>
+                                    <ng-container *ngFor="let user of listaUsuario">
+                                      <ng-container *ngIf="user.id == comunicado.usuario.id">
+                                        {{comunicado.usuario.nombreUsuario}}
+                                      </ng-container>
+                                    </ng-container>
+                                    
+                                  </td>
+                                  <td *ngIf="comunicado.estado == 1"> <label class="badge badge-success btnacti">ACTIVO</label></td>
+                                  <td *ngIf="comunicado.estado == 0"> <label class="badge badge-danger">INACTIVO</label></td>
+                  
+                                  <td>
+                                    <button type="button" (click)="SeleccionarComunicado(content,comunicado)" class="btn btn-dark has-icon btn-rounded" style="margin: 10px">
+                                    <i class="mdi mdi-lead-pencil"></i>Modificar</button>
+                                    <button type="button" (click)="CambiarEstado(comunicado, 0)" class="btn btn-danger has-icon btn-rounded" *ngIf="comunicado.estado == 1">
+                                      <i class="mdi mdi-delete"></i>Eliminar</button>
+                                    <button type="button" (click)="CambiarEstado(comunicado, 1)" class="btn btn-success has-icon btn-rounded" *ngIf="comunicado.estado == 0">
+                                      <i class="mdi mdi-arrow-right-bold-circle"></i>Activar</button>
+                                  </td>
+                                </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="float-end">
+                    <ngb-pagination [pageSize] = "pageSize" [collectionSize]="pagesizee" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>

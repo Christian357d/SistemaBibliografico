@@ -1,0 +1,75 @@
+<div id="fh5co-pricing" class="fh5co-bg-section">
+    <div class="container">
+        <div class="row animate-box">
+            <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+                <h2>Revista Cientifica</h2>
+                <p>Articulos Publicados Como Dentro de una Revista Cientifica</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="pricing pricing--rabten">
+                <ng-container *ngFor="let revista of listadorevista">
+                    <div class="col-md-4 animate-box pad">
+                        <div class="pricing__item">
+                            <div class="wrap-price backg">
+                                <h3 class="text-white texto">{{revista.articulo.titulo}}</h3>
+                                <br>
+                            </div>
+                            <div class="text-center backg">                                   
+                                <div id="fh5co-logo" ><img src="/../../assets/Cliente/images/logoCrad.png" width="100" height="100"></div>
+                            </div>
+                            <br>
+                            <div class="text-left text-white">
+                                <ul>
+                                    <li><span class="font-weight-bold">Fecha:  </span> {{revista.anioPublicacion | date: 'dd/MM/yyyy' }}</li>
+                                    <div class="row">
+                                        <div class="col-md-7 animate-box">
+                                            <li><span class="font-weight-bold">Frecuencia:  </span> {{revista.frecuencia }}</li>
+                                        </div>
+                                        <div class="col-md-5 animate-box">
+                                            <li><span class="font-weight-bold">Año:  </span> {{revista.anio | date: 'yyyy' }}</li>
+                                        </div>
+                                    </div>
+                                    <li><span class="font-weight-bold">Autores:  </span> 
+                                        <ng-container *ngFor="let articulo of listaArticulo; let i=index">
+                                            <ng-container *ngIf="articulo.id == revista.articulo.id">
+                                                <ng-container *ngFor="let articuloautor of listaArticuloAutor; let x=index">
+                                                    <ng-container *ngIf="articulo.id == articuloautor.articuloId">
+                                                      <ng-container *ngFor="let autor of listaAutor">
+                                                        <ng-container *ngIf="articuloautor.autorId == autor.id">
+                                                          {{autor.persona.nombre}} {{autor.persona.apellido}}, 
+                                                        </ng-container>
+                                                      </ng-container>
+                                                    </ng-container>
+                                                  </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </li>
+                                    
+                                    <li><span class="font-weight-bold">Revista:  </span> {{revista.nombreRevista }}</li>
+                                    <li><span class="font-weight-bold">Paginas:  </span> Pag. {{revista.pagInicio }} - Pag. {{revista.pagFinal }}</li>
+                                    <li>
+                                        <ng-container *ngFor="let editor of listadoeditor">
+                                            <ng-container *ngIf="editor.id == revista.editor.id">
+                                                <span class="font-weight-bold">Editor:  </span> {{editor.persona.nombre}} {{editor.persona.apellido}}
+                                            </ng-container>
+                                        </ng-container>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                            
+                            <div style="padding: 1em 2.5em 1em 2.5em;" class="jus">
+                                <span class="text-white">{{revista.articulo.palabrasClave}}</span>
+                            </div><br>
+                            <div class="text-center">
+                                <div id="fh5co-logo"><img src="/../../assets/Cliente/images/profesional.png" alt="" width="270" height="40"></div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    </ng-container>
+                
+        </div>
+    </div>
+  </div>

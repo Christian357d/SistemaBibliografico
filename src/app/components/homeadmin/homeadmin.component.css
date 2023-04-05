@@ -1,0 +1,59 @@
+.demo-inline-calendar-card {
+    width: 300px;
+  }
+  ::ng-deep .mat-calendar{
+    background-color:white;
+ }
+ ::ng-deep .mat-calendar-body-selected{
+  background-color:green;
+ }
+ 
+ .chartContenedor{
+  text-align: center;
+  margin: 0 auto;
+}
+
+.donate-now {
+  list-style-type: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+
+.donate-now li {
+  float: left;
+  margin: 0 5px 0 0;
+  width: 110px;
+  height: 40px;
+  position: relative;
+}
+.chart-container {
+  padding-top: 70px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  position: relative;
+  margin: auto;
+  height: 70vh;
+  width: 40vw;
+}
+.margen{
+  padding-top: 30px;
+  padding-left: 20px;
+  font-size: 120%; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+.margeBoton{
+  padding-top: 30px;
+  padding-left: 20px;
+}
+.subtitulos{
+  font-size: 130%; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+
+
+
+ 

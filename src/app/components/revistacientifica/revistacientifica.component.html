@@ -1,0 +1,352 @@
+
+<!-- Abrir Modal -->
+<div class="modal fade" id="revistaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">REVISTA CIENTIFICA</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup] = "form" (ngSubmit)="Guardar()">
+            <div class="form-group">
+              <label for="NombreRevista">Nombre de Revista</label>
+              <input type="text" class="form-control" id="NombreRevista" placeholder="Ingresa el Nombre de Revista" formControlName="NombreRevista"/>
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.revista">
+                <div *ngIf="form.controls['NombreRevista'].hasError(error.type) && (form.controls['NombreRevista'].dirty || form.controls['NombreRevista'].touched)">
+                      <small class="error">{{error.message}}</small>
+                </div>                     
+              </div>
+                <!-- Cerrar Mensaje Error -->
+            </div>
+            
+            <div class="form-group">
+                <label for="AnioPublicacion">Año de Publicación de Revista Científica</label>
+                <input type="date" class="form-control" id="AnioPublicacion" formControlName="AnioPublicacion"/>
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.anioPub">
+                <div *ngIf="form.controls['AnioPublicacion'].hasError(error.type) && (form.controls['AnioPublicacion'].dirty || form.controls['AnioPublicacion'].touched)">
+                      <small class="error">{{error.message}}</small>
+                </div>                     
+              </div>
+                <!-- Cerrar Mensaje Error -->
+            </div>
+
+            <div class="form-group">
+                <label>Frecuencia</label>
+                <select class="form-control form-select" formControlName="Frecuencia">
+              <option select value="">Seleccione la frecuencia con la que lleva a cabo la acta de congreso</option>
+                  <option value="Diaria">
+                      Diaria
+                  </option>
+                  <option value="Semanal">
+                      Semanal
+                  </option>
+                  <option value="Mensual">
+                      Mensual
+                  </option>
+                  <option value="Anual">
+                      Anual
+                  </option>
+                </select>
+                  <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.frecuencia">
+                <div *ngIf="form.controls['Frecuencia'].hasError(error.type) && (form.controls['Frecuencia'].dirty || form.controls['Frecuencia'].touched)">
+                      <small class="error">{{error.message}}</small>
+                </div>                     
+              </div>
+                <!-- Cerrar Mensaje Error -->
+              </div>
+
+            <div class="form-group">
+                <label for="NroRevista">Nro de Revista Científica</label>
+                <input type="number" class="form-control" id="NroRevista" placeholder="Ingresa el numero de NroRevista del acta" formControlName="NroRevista" min="1"/>
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.numero">
+                  <div *ngIf="form.controls['NroRevista'].hasError(error.type) && (form.controls['NroRevista'].dirty || form.controls['NroRevista'].touched)">
+                        <small class="error">{{error.message}}</small>
+                  </div>                     
+                </div>
+                  <!-- Cerrar Mensaje Error -->
+            </div>
+
+            <div class="form-group">
+                <label for="PagInicio">Página de inicio de Revista Científica</label>
+                <input type="number" class="form-control" id="PagInicio" placeholder="Ingresa el numero de PagInicio del acta" formControlName="PagInicio" min="1"/>
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.pagInicio">
+                  <div *ngIf="form.controls['PagInicio'].hasError(error.type) && (form.controls['PagInicio'].dirty || form.controls['PagInicio'].touched)">
+                        <small class="error">{{error.message}}</small>
+                  </div>                     
+                </div>
+                  <!-- Cerrar Mensaje Error -->
+            </div>
+
+            <div class="form-group">
+                <label for="PagFinal">Página Final de Revista Científica</label>
+                <input type="number" class="form-control" id="PagFinal" placeholder="Ingresa el numero de PagFinal del acta" formControlName="PagFinal" min="1"/>
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.pagFin">
+                  <div *ngIf="form.controls['PagFinal'].hasError(error.type) && (form.controls['PagFinal'].dirty || form.controls['PagFinal'].touched)">
+                        <small class="error">{{error.message}}</small>
+                  </div>                     
+                </div>
+                  <!-- Cerrar Mensaje Error -->
+            </div>
+
+            <div class="form-group">
+                <label for="Anio">Año de Revista Científica</label>
+                <input type="date" class="form-control" id="Anio" formControlName="Anio"/>
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.anio">
+                  <div *ngIf="form.controls['Anio'].hasError(error.type) && (form.controls['Anio'].dirty || form.controls['Anio'].touched)">
+                        <small class="error">{{error.message}}</small>
+                  </div>                     
+                </div>
+                  <!-- Cerrar Mensaje Error -->
+            </div>
+
+            <div class="form-group">
+              <label>Articulo</label>              
+              <select class="form-control" formControlName="articuloid">
+                <ng-container>
+                  <option select value="">Seleccione un Articulo</option>
+                  <option *ngFor="let articulo of listaArticulo" value="{{ articulo.id }}">{{articulo.titulo}}</option>
+                </ng-container>
+              </select>
+              <!-- Abrir Mensaje Error -->                    
+              <div *ngFor="let error of lista.mensajes.articulo">
+              <div *ngIf="form.controls['articuloid'].hasError(error.type) && (form.controls['articuloid'].dirty || form.controls['articuloid'].touched)">
+                    <small class="error">{{error.message}}</small>
+              </div>                     
+            </div>
+              <!-- Cerrar Mensaje Error -->
+            </div>
+
+
+            <div class="form-group">
+                <label>Editor</label>
+                <select class="form-control" formControlName="EditorId">
+                  <ng-container>
+                    <option select value="">Seleccione un Editor</option>
+                    <option *ngFor="let Editor of listaEditor" value="{{ Editor.id }}">{{ Editor.persona.nombre }} {{ Editor.persona.apellido }}</option>
+                  </ng-container>
+                </select>
+                  <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.editor">
+                  <div *ngIf="form.controls['EditorId'].hasError(error.type) && (form.controls['EditorId'].dirty || form.controls['EditorId'].touched)">
+                        <small class="error">{{error.message}}</small>
+                  </div>                     
+                </div>
+                <!-- Cerrar Mensaje Error -->
+              </div>
+
+
+              <div class="form-group">
+                <label>Temas</label>
+                <select class="form-control" multiple="multiple" formControlName="temaId" ata-menu-style="dropdown-blue" id="temaIdR">
+                  <option *ngFor="let tema of listaTemas" value="{{ tema.id }}">{{tema.nombre}}</option>                     
+              </select>                
+                <!-- Abrir Mensaje Error -->                    
+                <div *ngFor="let error of lista.mensajes.tema">
+                  <div *ngIf="form.controls['temaId'].hasError(error.type) && (form.controls['temaId'].dirty || form.controls['temaId'].touched)">
+                        <small class="error">{{error.message}}</small>
+                  </div>                     
+                </div>
+                <!-- Cerrar Mensaje Error -->
+              </div>
+              
+              <div class="modal-footer">
+                <button id="ModalClose" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-success" [disabled]="this.form.invalid"
+                type="submit"
+                [class.invalidado]="this.form.invalid"
+                [class.validado]="this.form.valid">Guardar</button>
+              </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Cerrar Modal -->
+
+<div class="content-viewport">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="row py-4">
+        <div class="col-sm-9">
+            <div class="">
+                <h2>REVISTA CIENTIFICA</h2>
+            </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card-description text-right">
+            <div class="row">
+              <div class="col-sm-6"> 
+                <button type="button" class="btn btn-primary has-icon btn-rounded buttoncolor" (click)="Guardarinstruct()"
+                data-toggle="modal" data-target="#revistaModal">
+                  <i class="mdi mdi-plus-circle"></i>AGREGAR</button> 
+              </div>
+              <div class="col-sm-6">  
+                <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="mdi mdi-content-copy"></i>REPORTE</button>
+                  <div class="dropdown-menu">
+                    <button class="dropdown-item " (click)="reportePDF()">PDF</button>
+                    <button class="dropdown-item " (click)="reporteExcel()">EXCEL</button>                                     
+                  </div>                                  
+              </div>
+            </div>   
+          </div>
+        </div>
+  </div>
+
+
+
+
+<div class="row" >
+    <div class="col-md-4 ">                    
+      <label><span class="subtitulos">BUSCAR</span></label>
+    </div>
+    <div class="col-md-7 ">
+      <div class="row"> 
+        <div class="col-md-4 ">
+          <label><span class="subtitulos">FILTRAR FRECUENCIA</span></label>
+        </div>
+        <div class="col-md-4 ">
+          <label><span class="subtitulos">FILTRAR ARTICULO</span></label>
+        </div>
+        <div class="col-md-3 ">
+          <label><span class="subtitulos">FILTRAR EDITOR</span></label>
+        </div>
+      </div>
+    </div> 
+  <div class="form-group row">
+    <div class="col-md-4 ">
+        <div class="input-group">
+          <select class="form-control col-md-3 text-center" [(ngModel)]="criterio">
+            <option value="nombreRevista">Nombre</option>
+          </select>
+          <input type="text" class="form-control" name="filter" placeholder="Buscar..."  [(ngModel)]="search" />              
+        </div>
+    </div>
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <select class="form-control form-select" style="width: 100%;" [(ngModel)]="search2">
+              <option select value="">Seleccione Frecuencia</option>
+              <option value="Diaria">
+                  Diaria
+              </option>
+              <option value="Semanal">
+                  Semanal
+              </option>
+              <option value="Mensual">
+                  Mensual
+              </option>
+              <option value="Anual">
+                  Anual
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <select class="form-control form-select" style="width: 100%;" [(ngModel)]="search3"> 
+            <option select value="">Seleccione Articulo</option>                         
+            <option *ngFor="let articulo of listaArticulo" value="{{ articulo.titulo }}">{{articulo.titulo}}</option>           
+          </select> 
+        </div>
+        <div class="form-group col-md-3">
+            <input type="text" class="form-control" style="width: 100%;" name="filter" placeholder="Editor..."  [(ngModel)]="search4" />
+        </div>
+        <div class="col-md-1 text-right">
+          <button type="button" class="btn btn-success has-icon btn-rounded dropdown-toggle buttoncolor botonUp"  (click)="LimpiarSearch()" clickable>
+          <i class="mdi mdi-reload"></i>LIMPIAR</button>
+        </div>      
+      </div>
+                                                    
+    </div>
+</div>
+
+
+
+
+            <div class="item-wrapper">
+                <div class="table-responsive">
+                     <table  id ="datos"  class="table info-table table-striped">
+                        <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NOMBRE</th>
+                                    <th>AÑO DE PUBLICACION</th>
+                                    <th>FRECUENCIA</th>
+                                    <th>NRO DE REVISTA</th>
+                                    <th>PÁG DE INICIO</th>
+                                    <th>PÁG FINAL</th>
+                                    <th>AÑO</th>
+                                    <th>ARTICULO</th>
+                                    <th>EDITOR</th>
+                                    <th>TEMAS</th>
+                                    <th>ESTADO</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let revistacientifica of listaRevistaCientifica | filtertwo:criterio4:search4:listaEditor | filtertwo:criterio3:search3:listaEditor | filtertwo:criterio2:search2:listaEditor | filtertwo:criterio:search:listaEditor  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+                                  <ng-container>
+                                    <td scope="row">{{i+((page-1) * pageSize)+1}}</td>
+                                    <td>{{ revistacientifica.nombreRevista }}</td>
+                                    <td>{{ revistacientifica.anioPublicacion | date: 'yyyy'}}</td>
+                                    <td>{{ revistacientifica.frecuencia }}</td>
+                                    <td>{{ revistacientifica.nroRevista }}</td>
+                                    <td>{{ revistacientifica.pagInicio }}</td>
+                                    <td>{{ revistacientifica.pagFinal }}</td>
+                                    <td>{{ revistacientifica.anio | date: 'yyyy'}}</td>
+                                    <td>{{ revistacientifica.articulo.titulo}}</td>
+                                    <td>
+                                      <ng-container *ngFor="let editor of listaEditor">
+                                        <ng-container *ngIf="revistacientifica.editor.id == editor.id">
+                                          {{editor.persona.nombre}} {{editor.persona.apellido}}<br>
+                                        </ng-container>
+                                      </ng-container>
+                                    </td>
+                                    
+                                    <td>
+                                      <ng-container *ngFor="let temarevista of listaTemasRevista; let x=index">
+                                        <ng-container *ngIf="revistacientifica.id == temarevista.revistaCientificaId">
+                                          <ng-container *ngFor="let tema of listaTemas">
+                                            <ng-container *ngIf="temarevista.temaId == tema.id">
+                                              {{tema.nombre}}<br>
+                                            </ng-container>
+                                          </ng-container>
+                                        </ng-container>
+                                      </ng-container>
+                                    </td>
+                                    <td *ngIf="revistacientifica.estado == 1"> <label class="badge badge-success btnacti">ACTIVO</label></td>
+                                    <td *ngIf="revistacientifica.estado == 0"> <label class="badge badge-danger">INACTIVO</label></td>
+                                    
+                                    <td>
+                                      <button type="button" (click)="SeleccionarRevistaCientifica(revistacientifica)" class="btn btn-dark has-icon btn-rounded" style="margin: 10px"
+                                      data-toggle="modal" data-target="#revistaModal">
+                                      <i class="mdi mdi-lead-pencil"></i>Modificar</button>
+                                      <button type="button" (click)="CambiarEstado(revistacientifica, 0)" class="btn btn-danger has-icon btn-rounded" *ngIf="revistacientifica.estado == 1">
+                                        <i class="mdi mdi-delete"></i>Eliminar</button>
+                                      <button type="button" (click)="CambiarEstado(revistacientifica, 1)" class="btn btn-success has-icon btn-rounded" *ngIf="revistacientifica.estado == 0">
+                                        <i class="mdi mdi-arrow-right-bold-circle"></i>Activar</button>
+                                    </td>
+                                  </ng-container>
+                                  </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="float-end">
+                      <ngb-pagination [pageSize] = "pageSize" [collectionSize]="pagesizee" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
